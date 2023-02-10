@@ -1,3 +1,4 @@
+import 'package:chat/widgets/blue_button.dart';
 import 'package:chat/widgets/custom_input.dart';
 import 'package:chat/widgets/labels.dart';
 import 'package:chat/widgets/logo.dart';
@@ -69,10 +70,16 @@ class __FormState extends State<_Form> {
 
           //TODO: crear boton
           //raisedButton deprecated
-          ElevatedButton(onPressed: (){
+          // ElevatedButton( 
+          //   onPressed: (){
+          //   // print(emailCtrl.text);
+          //   // print(passCtrl.text);
+          // }, child: null,)
+
+          BlueButton(text: 'Sign in', onPressed: (){
             print(emailCtrl.text);
             print(passCtrl.text);
-          }, child: null,)
+          })
 
         ],
         
