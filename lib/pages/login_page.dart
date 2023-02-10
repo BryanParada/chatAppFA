@@ -1,4 +1,6 @@
 import 'package:chat/widgets/custom_input.dart';
+import 'package:chat/widgets/labels.dart';
+import 'package:chat/widgets/logo.dart';
 import 'package:flutter/material.dart';
 
 
@@ -13,11 +15,11 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
       
-            _Logo(),
+            Logo(),
 
             _Form(),
 
-            _Labels(),
+            Labels(),
 
             Text('Terms and conditions', style: TextStyle(fontWeight: FontWeight.w200))
       
@@ -29,24 +31,7 @@ class LoginPage extends StatelessWidget {
 }
 
 
-class _Logo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 170,
-        margin: EdgeInsets.only(top:50),
-        child: Column(
-          children: [
-              Image(image: AssetImage('assets/tag-logo.png')),
-              SizedBox(height: 20,),
-              Text('Messenger', style: TextStyle(fontSize: 30))
-          ],
-        ),
-      ),
-    );
-  }
-}
+
 
 class _Form extends StatefulWidget { 
 
@@ -57,19 +42,37 @@ class _Form extends StatefulWidget {
 class __FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
+ 
+    final emailCtrl = TextEditingController();
+    final passCtrl = TextEditingController();
+ 
     return Container(
       margin: EdgeInsets.only(top: 40),
       padding: EdgeInsets.symmetric(horizontal: 50),
       child: Column(
         children: <Widget>[
 
-          CustomInput(),
-          CustomInput(),
+          CustomInput(
+            icon: Icons.mail_outline,
+            placeholder: 'Email',
+            keyboardType: TextInputType.emailAddress,
+            textController: emailCtrl,
+          ),
+
+          CustomInput(
+            icon: Icons.lock_outline,
+            placeholder: 'Password', 
+            textController: passCtrl, 
+            isPassword: true,
+          ),
 
 
           //TODO: crear boton
           //raisedButton deprecated
-          //ElevatedButton(onPressed: (){}, child: null,)
+          ElevatedButton(onPressed: (){
+            print(emailCtrl.text);
+            print(passCtrl.text);
+          }, child: null,)
 
         ],
         
@@ -78,17 +81,3 @@ class __FormState extends State<_Form> {
   }
 }
 
-class _Labels extends StatelessWidget { 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Text("Don't have an account?", style: TextStyle(color: Colors.black54, fontSize: 15, fontWeight: FontWeight.w300), ),
-          SizedBox(height: 10),
-          Text('Create account now', style: TextStyle( color: Colors.blue[600], fontWeight: FontWeight.bold),)
-        ],
-      ),
-    );
-  }
-}
