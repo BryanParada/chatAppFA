@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chat/widgets/chat_message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,16 @@ class _ChatPageState extends State<ChatPage> {
 
   final _textController = new TextEditingController();
   final _focusNode = new FocusNode();
+
+  List<ChatMessage> _messages = [
+    ChatMessage(text: 'hola', uid: '123'),
+    ChatMessage(text: 'holaxdaj aksljdlkasjd lkasdjla ksdjlkasdj lkasjd lkasjdlkasjdlkasjdlkasjdlkasjdlkajsdlkajs dlasd', uid: '123'),
+    ChatMessage(text: 'asd', uid: '222'),
+    ChatMessage(text: 'asd', uid: '222'),
+    ChatMessage(text: 'asd', uid: '222'),
+    ChatMessage(text: 'hofdfla', uid: '123'),
+  ];
+
   bool _isTyping = false;
 
   @override
@@ -45,7 +56,8 @@ class _ChatPageState extends State<ChatPage> {
             Flexible(
               child: ListView.builder(
                 physics: BouncingScrollPhysics(),
-                itemBuilder: (_, i ) => Text('$i'),
+                itemCount: _messages.length,
+                itemBuilder: (_, i ) => _messages[i],
                 reverse: true,
                 ) 
               ),
@@ -134,6 +146,10 @@ class _ChatPageState extends State<ChatPage> {
 
     _textController.clear();
     _focusNode.requestFocus();
+
+    final newMessage = new ChatMessage(text: text, uid: '123');
+    _messages.insert(0, newMessage);
+
 
     setState(() {
       _isTyping = false;
