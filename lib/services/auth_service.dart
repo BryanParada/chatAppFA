@@ -1,10 +1,15 @@
 
 import 'dart:convert';
 
-import 'package:chat/global/environment.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; 
+
+import 'package:chat/global/environment.dart';
+import 'package:chat/models/login_response.dart';
+import 'package:chat/models/user.dart';
 class AuthService with ChangeNotifier{
+
+  late User user;
 
   Future login( String email, String password ) async{
 
@@ -23,6 +28,10 @@ class AuthService with ChangeNotifier{
     );
 
     print(resp.body);
+    if (resp.statusCode == 200){
+      final loginResponse = loginResponseFromMap(resp.body);
+      this.user = loginResponse.user;
+    }
     
 
 
