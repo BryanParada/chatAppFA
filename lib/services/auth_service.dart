@@ -10,8 +10,20 @@ import 'package:chat/models/user.dart';
 class AuthService with ChangeNotifier{
 
   late User user;
+  bool _authenticating = false;
+
+  bool get authenticating => this._authenticating;
+  set authenticating(bool value){
+    this._authenticating = value;
+    notifyListeners();
+  }
+
+
 
   Future login( String email, String password ) async{
+
+    this.authenticating = true;
+
 
     final data = {
       'email': email,
@@ -19,7 +31,7 @@ class AuthService with ChangeNotifier{
     };
 
     final uri = Uri.parse('${Environment.apiUrl}/login');
-    print(uri);
+    //print(uri);
     final resp = await http.post(uri,
       body: jsonEncode(data),
       headers: {
@@ -32,6 +44,8 @@ class AuthService with ChangeNotifier{
       final loginResponse = loginResponseFromMap(resp.body);
       this.user = loginResponse.user;
     }
+
+    this.authenticating = false;
     
 
 

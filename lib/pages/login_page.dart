@@ -49,11 +49,15 @@ class _Form extends StatefulWidget {
 }
 
 class __FormState extends State<_Form> {
+
+    final emailCtrl = TextEditingController();
+    final passCtrl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
  
-    final emailCtrl = TextEditingController();
-    final passCtrl = TextEditingController();
+    final authService = Provider.of<AuthService>(context);//no sera necesario colocar listener porque en el build podemos redibujar si la propiedad cambia o el provider del authservice dispara el notifyListeners 
+    
  
     return Container(
       margin: EdgeInsets.only(top: 40),
@@ -84,11 +88,15 @@ class __FormState extends State<_Form> {
           //   // print(passCtrl.text);
           // }, child: null,)
 
-          BlueButton(text: 'Sign in', onPressed: (){
-            print(emailCtrl.text);
-            print(passCtrl.text);
-            final authService = Provider.of<AuthService>(context, listen: false);//que no redibuje
-            authService.login(emailCtrl.text, passCtrl.text);
+          BlueButton(text: 'Sign in',
+           onPressed: authService.authenticating ? null : (){
+            // print(emailCtrl.text);
+            // print(passCtrl.text);
+            
+            FocusScope.of(context).unfocus();
+
+            authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
+
           })
 
         ],
