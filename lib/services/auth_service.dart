@@ -20,7 +20,7 @@ class AuthService with ChangeNotifier{
 
 
 
-  Future login( String email, String password ) async{
+  Future<bool> login( String email, String password ) async{
 
     this.authenticating = true;
 
@@ -40,12 +40,16 @@ class AuthService with ChangeNotifier{
     );
 
     print(resp.body);
+    this.authenticating = false;
     if (resp.statusCode == 200){
       final loginResponse = loginResponseFromMap(resp.body);
       this.user = loginResponse.user;
+
+      return true;
+    }else{
+      return false;
     }
 
-    this.authenticating = false;
     
 
 

@@ -1,3 +1,4 @@
+import 'package:chat/helpers/show_alert.dart';
 import 'package:chat/services/auth_service.dart';
 import 'package:chat/widgets/blue_button.dart';
 import 'package:chat/widgets/custom_input.dart';
@@ -89,13 +90,20 @@ class __FormState extends State<_Form> {
           // }, child: null,)
 
           BlueButton(text: 'Sign in',
-           onPressed: authService.authenticating ? null : (){
+           onPressed: authService.authenticating ? null : () async{
             // print(emailCtrl.text);
             // print(passCtrl.text);
             
             FocusScope.of(context).unfocus();
 
-            authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
+            final loginOk = await authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
+
+            if ( loginOk ){
+              //Navegar a otra pantalla
+            }else{
+              //TODO: Mostar alerta
+              showAlert(context, 'Invalid Login', 'Check your credentials');
+            }
 
           })
 
