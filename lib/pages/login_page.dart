@@ -100,6 +100,7 @@ class __FormState extends State<_Form> {
 
             if ( loginOk ){
               //Navegar a otra pantalla
+              Navigator.pushReplacementNamed(context, 'users'); //para no regresar al login
             }else{
               //TODO: Mostar alerta
               showAlert(context, 'Invalid Login', 'Check your credentials');
