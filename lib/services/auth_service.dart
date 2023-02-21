@@ -80,13 +80,13 @@ class AuthService with ChangeNotifier{
     };
 
     final uri = Uri.parse('${Environment.apiUrl}/login/new');
-    print(uri);
+    //print(uri);
     final resp = await http.post(uri,
       body: jsonEncode(data),
       headers: { 'Content-Type': 'application/json' }
     );
 
-    print(resp.body);
+    //print(resp.body);
     this.authenticating = false;
     if (resp.statusCode == 200){
       final loginResponse = loginResponseFromMap(resp.body);
@@ -121,7 +121,7 @@ class AuthService with ChangeNotifier{
     final token = await this._storage.read(key: 'token');
 
     final uri = Uri.parse('${Environment.apiUrl}/login/renew');
-    print(uri);
+    //print(uri);
     final resp = await http.get(uri, 
       headers: { 
         'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ class AuthService with ChangeNotifier{
          }
     );
 
-    print(resp.body);
+    //print(resp.body);
     this.authenticating = false;
     if (resp.statusCode == 200){
       final loginResponse = loginResponseFromMap(resp.body);
