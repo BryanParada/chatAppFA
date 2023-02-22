@@ -1,6 +1,7 @@
 import 'package:chat/models/user.dart';
 import 'package:chat/services/auth_service.dart';
 import 'package:chat/services/socket_service.dart';
+import 'package:chat/services/users_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -13,14 +14,23 @@ class UsersPage extends StatefulWidget {
 
 class _UsersPageState extends State<UsersPage> {
 
-   RefreshController _refreshController = RefreshController(initialRefresh: false);
+  final usersServicer = new UsersService();
+   RefreshController _refreshController = RefreshController(initialRefresh: false); 
 
-  final users = [
-    User(online: true, email: 'test1@test.com', name: 'test1', uid: '1'),
-    User(online: true, email: 'test2@test.com', name: 'test2', uid: '2'),
-    User(online: false, email: 'test3@test.com', name: 'test3', uid: '3'),
+   List<User> users = [];
 
-  ];
+  // final users = [
+  //   User(online: true, email: 'test1@test.com', name: 'test1', uid: '1'),
+  //   User(online: true, email: 'test2@test.com', name: 'test2', uid: '2'),
+  //   User(online: false, email: 'test3@test.com', name: 'test3', uid: '3'),
+
+  // ];
+
+  @override
+  void initState() {
+    this._loadUsers();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +106,9 @@ class _UsersPageState extends State<UsersPage> {
 
   _loadUsers() async{
 
-   await Future.delayed(Duration(milliseconds: 1000));
+    this.users = await usersServicer.getUser();
+    setState(() {});
+    //await Future.delayed(Duration(milliseconds: 1000)); //Test para esperar un segundo
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
 
