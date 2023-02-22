@@ -1,5 +1,6 @@
 import 'package:chat/models/user.dart';
 import 'package:chat/services/auth_service.dart';
+import 'package:chat/services/chat_service.dart';
 import 'package:chat/services/socket_service.dart';
 import 'package:chat/services/users_service.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +101,12 @@ class _UsersPageState extends State<UsersPage> {
             borderRadius: BorderRadius.circular(100)
           )
         ),
+        onTap: () {
+          // print(user.name);
+          final chatService = Provider.of<ChatService>(context, listen: false);
+          chatService.toUser = user;
+          Navigator.pushNamed(context, 'chat');
+        },
       );
   }
 
